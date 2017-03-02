@@ -3,7 +3,7 @@ apply plugin: 'war'
 // Apply the Gretty plugin to run in an embedded servlet container
 apply from: 'https://raw.github.com/akhikhl/gretty/master/pluginScripts/gretty.plugin'
 
-group = 'org.kevfung'
+group = 'com.kevfung'
 version = '0.1-SNAPSHOT'
 description = 'Weather service web application'
 
