@@ -1,0 +1,27 @@
+// Apply the war plugin to add support for Java WAR
+apply plugin: 'java'
+apply plugin: 'war'
+
+group = 'org.kevfung'
+version = '0.1-SNAPSHOT'
+description = 'Weather service web application'
+
+// In this section you declare where to find the dependencies of your project
+repositories {
+    mavenCentral()
+}
+
+// In this section you declare the dependencies for your production and test code
+dependencies {
+    compile 'org.slf4j:slf4j-api:1.7.13'
+    
+    // JAX-RS
+    compile 'javax.ws.rs:javax.ws.rs-api:2.0.1'
+    
+    // Jersey
+    compile 'org.glassfish.jersey.containers:jersey-container-servlet:2.25.1'
+    // JSON support
+    compile 'org.glassfish.jersey.media:jersey-media-json-jackson:2.25.1'
+
+    testCompile 'junit:junit:4.12'
+}
