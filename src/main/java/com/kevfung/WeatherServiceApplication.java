@@ -23,20 +23,12 @@ import com.kevfung.utils.OpenWatherApiUtils;
 public class WeatherServiceApplication extends ResourceConfig {
 	
 	static final Logger LOG = Logger.getLogger(WeatherServiceApplication.class);
-	static final String PROPERTIES_FILE = "gradle.properties";
 	
 	public static String openWeatherApiKey;
 	
 	public WeatherServiceApplication() {
 		// Add our packages as resources for this application
 		packages("com.kevfung");
-		
-		try {
-			OpenWatherApiUtils.loadOpenWeatherApiKey(PROPERTIES_FILE);
-		}
-		catch(IllegalStateException e) {
-			LOG.error(e.getMessage(), e);
-		}
 	}	
 
 }

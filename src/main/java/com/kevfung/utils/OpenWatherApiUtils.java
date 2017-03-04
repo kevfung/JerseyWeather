@@ -12,14 +12,27 @@ import com.kevfung.WeatherServiceApplication;
 
 public class OpenWatherApiUtils {
 
-	private static final Logger LOG = Logger.getLogger(WeatherServiceApplication.class);
+	private static final Logger LOG = Logger.getLogger(OpenWatherApiUtils.class);
+	private static final String PROPERTIES_FILE = "gradle.properties";
 		
 	public static final String BASE_URL = "http://api.openweathermap.org/data/2.5";
 	public static final String WEATHER_RESOURCE = "/weather";
+
+	public static final String API_KEY_QUERY_PARAM = "APPID";
+	public static final String CITY_QUERY_PARAM = "q";
 	
 	private static String openWeatherApiKey; 
 	
 	public static String getOpenWeatherApiKey() {
+		if (openWeatherApiKey == null || openWeatherApiKey.length() == 0) {
+			try {
+				loadOpenWeatherApiKey(PROPERTIES_FILE);
+			}
+			catch (IllegalStateException e) {
+				LOG.error(e.getMessage(), e);
+			}
+		}
+		
 		return openWeatherApiKey;
 	}
 	
