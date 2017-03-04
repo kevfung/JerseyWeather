@@ -17,17 +17,16 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class Test_WeatherServiceApplication {
+import com.kevfung.utils.OpenWatherApiUtils;
+
+public class Test_OpenWeatherApiUtils {
 
 	private static final String TEST_FILE_NAME = "test.txt";
 	private static final String TEST_PROP_KEY = "ApiKey";
-	private static final String TEST_PROP_VALUE = "1234567890";
-	
-	private static WeatherServiceApplication weatherServiceApp;
+	private static final String TEST_PROP_VALUE = "1234567890";	
 	
 	@Before
 	public void setup() {
-		weatherServiceApp = new WeatherServiceApplication();
 		// Do log4j configuration
 		BasicConfigurator.configure();
 	}
@@ -59,9 +58,9 @@ public class Test_WeatherServiceApplication {
 	@Test
 	public void test_loadOpenWeatherApiKey_success() {
 		createTestFile();
-		weatherServiceApp.loadOpenWeatherApiKey(TEST_FILE_NAME);
+		OpenWatherApiUtils.loadOpenWeatherApiKey(TEST_FILE_NAME);
 		assertTrue("Expecting " + TEST_PROP_VALUE + " to be loaded from " + TEST_FILE_NAME
-				,TEST_PROP_VALUE.equals(weatherServiceApp.openWeatherApiKey));
+				,TEST_PROP_VALUE.equals(OpenWatherApiUtils.getOpenWeatherApiKey()));
 	}	
 
 }

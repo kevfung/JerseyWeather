@@ -11,6 +11,8 @@ import javax.ws.rs.ApplicationPath;
 import org.apache.log4j.Logger;
 import org.glassfish.jersey.server.ResourceConfig;
 
+import com.kevfung.utils.OpenWatherApiUtils;
+
 /**
  * This is the {@link ResourceConfig} for this weather service application
  * 
@@ -29,32 +31,7 @@ public class WeatherServiceApplication extends ResourceConfig {
 		// Add our packages as resources for this application
 		packages("com.kevfung");
 		
-		loadOpenWeatherApiKey(PROPERTIES_FILE);
-	}
-	
-	/**
-	 * Get Open Weather API key from configuration properties file and load
-	 * it into the local static variable
-	 */
-	void loadOpenWeatherApiKey(String fileName) {
-		try (Stream<String> stream = Files.lines(Paths.get(fileName))) {
+		OpenWatherApiUtils.loadOpenWeatherApiKey(PROPERTIES_FILE);
+	}	
 
-			Optional<String> firstLine = stream.findFirst();
-			if (firstLine.isPresent()) {
-				final String keyValue = firstLine.get().toString();
-				final int indexOfEqual = keyValue.indexOf("=");
-				if (indexOfEqual >= 0) {
-					openWeatherApiKey = keyValue.substring(indexOfEqual+1);
-				} 
-				else {
-					LOG.warn("Could not find Open Weather API key of format \"key=value\" from " + fileName);
-				}
-			}
-			else {
-				LOG.warn("Did not find any configuration string in file " + fileName);
-			}	
-		} catch (IOException e) {
-			LOG.error("Could not read from " + fileName, e);
-		}		
-	}
 }
