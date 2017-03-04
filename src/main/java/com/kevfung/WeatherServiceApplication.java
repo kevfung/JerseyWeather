@@ -31,7 +31,12 @@ public class WeatherServiceApplication extends ResourceConfig {
 		// Add our packages as resources for this application
 		packages("com.kevfung");
 		
-		OpenWatherApiUtils.loadOpenWeatherApiKey(PROPERTIES_FILE);
+		try {
+			OpenWatherApiUtils.loadOpenWeatherApiKey(PROPERTIES_FILE);
+		}
+		catch(IllegalStateException e) {
+			LOG.error(e.getMessage(), e);
+		}
 	}	
 
 }

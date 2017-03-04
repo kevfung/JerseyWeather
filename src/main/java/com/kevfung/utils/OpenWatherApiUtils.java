@@ -26,8 +26,11 @@ public class OpenWatherApiUtils {
 	/**
 	 * Get Open Weather API key from configuration properties file and load
 	 * it into the private local static variable
+	 * 
+	 * @param fileName the filename and path of where the API key is stored
+	 * @throws IllegalStateException
 	 */
-	public static void loadOpenWeatherApiKey(String fileName) {
+	public static void loadOpenWeatherApiKey(String fileName) throws IllegalStateException {
 		try (Stream<String> stream = Files.lines(Paths.get(fileName))) {
 
 			Optional<String> firstLine = stream.findFirst();
@@ -37,15 +40,15 @@ public class OpenWatherApiUtils {
 				if (indexOfEqual >= 0) {
 					openWeatherApiKey = keyValue.substring(indexOfEqual+1);
 				} 
-				else {
-					LOG.warn("Could not find Open Weather API key of format \"key=value\" from " + fileName);
+				else {					
+					throw new IllegalStateException("Could not find Open Weather API key of format \"key=value\" from " + fileName);
 				}
 			}
 			else {
-				LOG.warn("Did not find any configuration string in file " + fileName);
-			}	
+				throw new IllegalStateException("Did not find any configuration string in file " + fileName);
+			}				
 		} catch (IOException e) {
-			LOG.error("Could not read from " + fileName, e);
-		}		
+			throw new IllegalStateException("Could not read from " + fileName, e);
+		}	
 	}
 }
