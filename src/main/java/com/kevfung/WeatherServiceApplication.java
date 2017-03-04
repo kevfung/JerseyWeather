@@ -47,11 +47,11 @@ public class WeatherServiceApplication extends ResourceConfig {
 					openWeatherApiKey = keyValue.substring(indexOfEqual+1);
 				} 
 				else {
-					LOG.warn("Could not retrieve Open Weather API key from " + fileName);
+					LOG.warn("Could not find Open Weather API key of format \"key=value\" from " + fileName);
 				}
 			}
 			else {
-				LOG.warn("Could not retrieve Open Weather API key from " + fileName);
+				LOG.warn("Did not find any configuration string in file " + fileName);
 			}	
 		} catch (IOException e) {
 			LOG.error("Could not read from " + fileName, e);
