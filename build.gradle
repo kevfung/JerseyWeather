@@ -18,10 +18,12 @@ war {
 
 // In this section you declare the dependencies for your production and test code
 dependencies {
-    compile 'org.slf4j:slf4j-api:1.7.13'
+    compile 'log4j:log4j:1.2.17'
             
     // Jersey
     compile 'org.glassfish.jersey.containers:jersey-container-servlet:2.25.1'
+    // Jersey Client for external HTTP calls
+    compile 'org.glassfish.jersey.containers:jersey-container-jetty-http:2.25.1'
     // JSON support
     compile 'org.glassfish.jersey.media:jersey-media-json-jackson:2.25.1'
 
