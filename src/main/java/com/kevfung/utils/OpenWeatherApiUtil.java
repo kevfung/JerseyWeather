@@ -10,9 +10,9 @@ import org.apache.log4j.Logger;
 
 import com.kevfung.WeatherServiceApplication;
 
-public class OpenWatherApiUtils {
+public class OpenWeatherApiUtil {
 
-	private static final Logger LOG = Logger.getLogger(OpenWatherApiUtils.class);
+	private static final Logger LOG = Logger.getLogger(OpenWeatherApiUtil.class);
 	private static final String PROPERTIES_FILE = "gradle.properties";
 		
 	public static final String BASE_URL = "http://api.openweathermap.org/data/2.5";

@@ -17,7 +17,7 @@ import javax.ws.rs.core.UriInfo;
 import org.apache.log4j.Logger;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kevfung.utils.OpenWatherApiUtils;
+import com.kevfung.utils.OpenWeatherApiUtil;
 import com.kevfung.utils.jsonclasses.CurrentWeather;
 
 /**
@@ -37,11 +37,11 @@ public class WeatherRetrievalService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response getCurrentWeather(@Context UriInfo queryParams) {
 		Client client = ClientBuilder.newClient();
-		WebTarget target = client.target(OpenWatherApiUtils.BASE_URL)
-				.path(OpenWatherApiUtils.WEATHER_RESOURCE)
-				.queryParam(OpenWatherApiUtils.CITY_QUERY_PARAM, "Vancouver")
-				.queryParam(OpenWatherApiUtils.UNITS_QUERY_PARAM, OpenWatherApiUtils.METRIC_UNITS)
-				.queryParam(OpenWatherApiUtils.API_KEY_QUERY_PARAM, OpenWatherApiUtils.getOpenWeatherApiKey());
+		WebTarget target = client.target(OpenWeatherApiUtil.BASE_URL)
+				.path(OpenWeatherApiUtil.WEATHER_RESOURCE)
+				.queryParam(OpenWeatherApiUtil.CITY_QUERY_PARAM, "Vancouver")
+				.queryParam(OpenWeatherApiUtil.UNITS_QUERY_PARAM, OpenWeatherApiUtil.METRIC_UNITS)
+				.queryParam(OpenWeatherApiUtil.API_KEY_QUERY_PARAM, OpenWeatherApiUtil.getOpenWeatherApiKey());
 
 		LOG.debug("Target URL: " + target.getUri().toString());
 		

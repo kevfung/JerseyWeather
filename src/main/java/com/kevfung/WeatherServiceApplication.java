@@ -11,7 +11,7 @@ import javax.ws.rs.ApplicationPath;
 import org.apache.log4j.Logger;
 import org.glassfish.jersey.server.ResourceConfig;
 
-import com.kevfung.utils.OpenWatherApiUtils;
+import com.kevfung.utils.OpenWeatherApiUtil;
 
 /**
  * This is the {@link ResourceConfig} for this weather service application

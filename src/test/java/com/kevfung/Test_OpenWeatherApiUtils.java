@@ -20,7 +20,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import com.kevfung.utils.OpenWatherApiUtils;
+import com.kevfung.utils.OpenWeatherApiUtil;
 
 public class Test_OpenWeatherApiUtils {
 
@@ -90,15 +90,15 @@ public class Test_OpenWeatherApiUtils {
 	@Test
 	public void test_loadOpenWeatherApiKey_success() {
 		createTestFileWithKey();
-		OpenWatherApiUtils.loadOpenWeatherApiKey(TEST_FILE_NAME);
+		OpenWeatherApiUtil.loadOpenWeatherApiKey(TEST_FILE_NAME);
 		assertTrue("Expecting " + TEST_PROP_VALUE + " to be loaded from " + TEST_FILE_NAME
-				,TEST_PROP_VALUE.equals(OpenWatherApiUtils.getOpenWeatherApiKey()));
+				,TEST_PROP_VALUE.equals(OpenWeatherApiUtil.getOpenWeatherApiKey()));
 	}
 	
 	@Test(expected=IllegalStateException.class)
 	public void test_loadOpenWeatherApiKey_failure_file_not_exist() {
 		deleteTestFile();
-		OpenWatherApiUtils.loadOpenWeatherApiKey(TEST_FILE_NAME);
+		OpenWeatherApiUtil.loadOpenWeatherApiKey(TEST_FILE_NAME);
 	}
 	
 	@Test
@@ -108,7 +108,7 @@ public class Test_OpenWeatherApiUtils {
 		
 		deleteTestFile();
 		createTestFileWithoutKey();
-		OpenWatherApiUtils.loadOpenWeatherApiKey(TEST_FILE_NAME);
+		OpenWeatherApiUtil.loadOpenWeatherApiKey(TEST_FILE_NAME);
 	}
 	
 	@Test
@@ -118,7 +118,7 @@ public class Test_OpenWeatherApiUtils {
 		
 		deleteTestFile();
 		createTestFileWithoutProperKeyFormat();
-		OpenWatherApiUtils.loadOpenWeatherApiKey(TEST_FILE_NAME);
+		OpenWeatherApiUtil.loadOpenWeatherApiKey(TEST_FILE_NAME);
 	}
 
 }
