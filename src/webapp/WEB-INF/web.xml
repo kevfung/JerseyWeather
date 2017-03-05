@@ -3,11 +3,6 @@
 
 	<servlet>
 		<servlet-name>com.kevfung.WeatherServiceApplication</servlet-name>
-<!-- 		<init-param> -->
-<!-- 	       <param-name>jersey.config.server.provider.packages</param-name> -->
-<!-- 	       <param-value>com.kevfung</param-value> -->
-<!-- 		</init-param> -->
-<!-- 		<load-on-startup>1</load-on-startup> -->
 	</servlet>
 
 	<servlet-mapping>
