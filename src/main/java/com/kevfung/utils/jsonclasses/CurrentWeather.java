@@ -35,8 +35,12 @@ public class CurrentWeather {
 
 	@Override
 	public String toString() {
+		StringBuffer weatherStrBuffer = new StringBuffer();
+		for(int weatherItem = 0; weatherItem < weather.length; weatherItem++) {
+			weatherStrBuffer.append(weatherItem + " " + weather[weatherItem].toString() + "\n");
+		}
 		return "Current Weather [name : " + name + "\n"
-				+ weather + "\n"
+				+ weatherStrBuffer
 				+ main + "\n"
 				+ "]";
 	}
