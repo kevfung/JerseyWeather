@@ -20,6 +20,8 @@ public class OpenWatherApiUtils {
 
 	public static final String API_KEY_QUERY_PARAM = "APPID";
 	public static final String CITY_QUERY_PARAM = "q";
+	public static final String UNITS_QUERY_PARAM = "units";	
+	public static final String METRIC_UNITS = "metric";	// used by UNITS_QUERY_PARAM
 	
 	private static String openWeatherApiKey; 
 	
