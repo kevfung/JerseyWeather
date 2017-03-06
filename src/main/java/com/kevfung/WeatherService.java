@@ -31,7 +31,7 @@ public class WeatherService {
 	@GET
 	@Path("/{param}")
 	public Response getTestMsg(@PathParam("param") String msg, @Context UriInfo queryParams) {
-		StringBuffer output = new StringBuffer("Your URI parameter: " + msg);	
+		StringBuilder output = new StringBuilder("Your URI parameter: " + msg);	
 		
 		MultivaluedMap<String, String> queryParam = queryParams.getQueryParameters();
 		Set<Entry<String, List<String>>> queryKeyValuePairs = queryParam.entrySet();
