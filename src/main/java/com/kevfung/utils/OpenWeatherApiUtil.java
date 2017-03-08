@@ -18,7 +18,7 @@ public class OpenWeatherApiUtil {
 	public static final String BASE_URL = "http://api.openweathermap.org/data/2.5";
 	public static final String WEATHER_RESOURCE = "/weather";
 
-	public static final String API_KEY_QUERY_PARAM = "APPID";
+	public static final String API_KEY_QUERY_PARAM = "APPID"; // Usually not safe to put API key in query param, but Open Weather API only allows this method
 	public static final String CITY_QUERY_PARAM = "q";
 	public static final String UNITS_QUERY_PARAM = "units";	
 	public static final String METRIC_UNITS = "metric";	// used by UNITS_QUERY_PARAM
