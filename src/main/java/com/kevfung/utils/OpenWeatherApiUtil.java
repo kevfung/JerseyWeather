@@ -1,19 +1,16 @@
 package com.kevfung.utils;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Optional;
-import java.util.stream.Stream;
-
+import java.util.Properties;
 import org.apache.log4j.Logger;
-
-import com.kevfung.WeatherServiceApplication;
 
 public class OpenWeatherApiUtil {
 
 	private static final Logger LOG = Logger.getLogger(OpenWeatherApiUtil.class);
 	private static final String PROPERTIES_FILE = "gradle.properties";
+	private static final String API_KEY_PROPERTY = "API_KEY";
 		
 	public static final String BASE_URL = "http://api.openweathermap.org/data/2.5";
 	public static final String WEATHER_RESOURCE = "/weather";
@@ -46,24 +43,30 @@ public class OpenWeatherApiUtil {
 	 * @throws IllegalStateException
 	 */
 	public static void loadOpenWeatherApiKey(String fileName) throws IllegalStateException {
-		try (Stream<String> stream = Files.lines(Paths.get(fileName))) {
-
-			Optional<String> firstLine = stream.findFirst();
-			if (firstLine.isPresent()) {
-				final String keyValue = firstLine.get().toString();
-				final int indexOfEqual = keyValue.indexOf("=");
-				if (indexOfEqual >= 0) {
-					openWeatherApiKey = keyValue.substring(indexOfEqual+1);
-				} 
-				else {					
-					throw new IllegalStateException("Could not find Open Weather API key of format \"key=value\" from " + fileName);
-				}
-			}
-			else {
-				throw new IllegalStateException("Did not find any configuration string in file " + fileName);
-			}				
+		FileInputStream propertiesFile = null;
+		
+		try {
+			propertiesFile = new FileInputStream(fileName);
+			Properties properties = new Properties();
+			properties.load(propertiesFile);
+			openWeatherApiKey = properties.getProperty(API_KEY_PROPERTY);
+			
+			if (openWeatherApiKey == null) {
+				throw new IllegalStateException("Could not find Open Weather API key of format \"API_KEY=<value>\" from " + fileName);
+			}			
+		} catch (FileNotFoundException e) {
+			throw new IllegalStateException("File with name " + fileName + " does not exist.", e);
 		} catch (IOException e) {
 			throw new IllegalStateException("Could not read from " + fileName, e);
-		}	
+		}
+		finally {
+			if (propertiesFile != null) {
+				try {
+					propertiesFile.close();
+				} catch (IOException e) {
+					LOG.warn("Could not close input stream for file " + fileName, e);
+				}				
+			}
+		}		
 	}
 }
