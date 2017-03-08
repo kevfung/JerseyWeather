@@ -1,17 +1,9 @@
 package com.kevfung;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Optional;
-import java.util.stream.Stream;
-
 import javax.ws.rs.ApplicationPath;
 
 import org.apache.log4j.Logger;
 import org.glassfish.jersey.server.ResourceConfig;
-
-import com.kevfung.utils.OpenWeatherApiUtil;
 
 /**
  * This is the {@link ResourceConfig} for this weather service application
