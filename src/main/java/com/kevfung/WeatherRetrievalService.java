@@ -26,10 +26,13 @@ import com.kevfung.utils.OpenWeatherApiUtil;
 public class WeatherRetrievalService {
 
 	private static final Logger LOG = Logger.getLogger(WeatherRetrievalService.class);
+
+	// Which locale to get weather for
+	private static final String LOCALE_VANCOUVER = "Vancouver";
 	
 	/**
 	 * Gets the current weather by calling the Open Weather Service API
-	 * and converst it to a {@link CurrentWeather} object. Then it 
+	 * and converts it to a {@link CurrentWeather} object. Then it 
 	 * prints out the object.
 	 * 
 	 * @return
@@ -38,23 +41,35 @@ public class WeatherRetrievalService {
 	@Path("/current")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response getCurrentWeather() {
-		Client client = ClientBuilder.newClient();
-		WebTarget target = client.target(OpenWeatherApiUtil.BASE_URL)
-				.path(OpenWeatherApiUtil.WEATHER_RESOURCE)
-				.queryParam(OpenWeatherApiUtil.CITY_QUERY_PARAM, "Vancouver")
-				.queryParam(OpenWeatherApiUtil.UNITS_QUERY_PARAM, OpenWeatherApiUtil.METRIC_UNITS)
-				.queryParam(OpenWeatherApiUtil.API_KEY_QUERY_PARAM, OpenWeatherApiUtil.getOpenWeatherApiKey());
-
-		LOG.debug("Target URL: " + target.getUri().toString());
-		
-		Invocation.Builder invocationBuilder = target.request(MediaType.APPLICATION_JSON);		
-		String jsonResponse = invocationBuilder.get(String.class);		
-		LOG.debug(jsonResponse);
+		String jsonResponse = getOpenWeatherApiCurrentWeather();
 		
 		CurrentWeather currentWeather = JacksonUtil.jsonToObj(jsonResponse, CurrentWeather.class);
 		
 		return Response.status(200)
 				.entity(currentWeather != null ? currentWeather.toString().replace("\n", "<br>") : "Error: Unable to parse JSON response")
 				.build();
+	}
+
+	/**
+	 * Gets the current weather from Open Weather API and
+	 * retuns the JSON response as a string
+	 * 
+	 * @return JSON response for current weather
+	 */
+	public String getOpenWeatherApiCurrentWeather() {
+		Client client = ClientBuilder.newClient();
+		WebTarget target = client.target(OpenWeatherApiUtil.BASE_URL)
+				.path(OpenWeatherApiUtil.WEATHER_RESOURCE)
+				.queryParam(OpenWeatherApiUtil.CITY_QUERY_PARAM, LOCALE_VANCOUVER)
+				.queryParam(OpenWeatherApiUtil.UNITS_QUERY_PARAM, OpenWeatherApiUtil.METRIC_UNITS)
+				.queryParam(OpenWeatherApiUtil.API_KEY_QUERY_PARAM, OpenWeatherApiUtil.getOpenWeatherApiKey());
+
+		LOG.debug("Target URL: " + target.getUri().toString());
+		
+		Invocation.Builder invocationBuilder = target.request(MediaType.APPLICATION_JSON);		
+		String jsonStr = invocationBuilder.get(String.class);		
+		LOG.debug(jsonStr);
+		
+		return jsonStr;
 	}
 }
