@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<head>
+	<link href="/public/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
+</head>
+<body>
+	<div class="lead bg-success">
+	Weather for Vancouver
+	</div>
+	<table class="table-striped">
+		<thead>
+			<tr>
+				<td>Day</td>
+				<td>Temperature (Celsius)</td>
+				<td>Condition</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Today</td>
+				<td>$!weather.main.temp</td>
+			</tr>
+		</tbody>
+	</table>	
+</body>
+</html>
