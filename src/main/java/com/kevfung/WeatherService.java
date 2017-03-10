@@ -1,5 +1,6 @@
 package com.kevfung;
 
+import java.io.StringWriter;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -7,10 +8,22 @@ import java.util.Set;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.container.ResourceContext;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+
+import org.apache.log4j.Logger;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.Velocity;
+import org.apache.velocity.runtime.RuntimeConstants;
+import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
+
+import com.kevfung.jsonclass.CurrentWeather;
+import com.kevfung.utils.JacksonUtil;
+import com.kevfung.utils.OpenWeatherApiUtil;
+import com.kevfung.utils.VelocityUtil;
 
 /**
  * This is the weather service resource
@@ -20,6 +33,11 @@ import javax.ws.rs.core.UriInfo;
  */
 @Path("/weather")
 public class WeatherService {
+	
+	private static final Logger LOG = Logger.getLogger(WeatherService.class);
+	
+	@Context
+	ResourceContext resourceContext;
 	
 	/**
 	 * This method is for testing our weather service.
@@ -41,5 +59,26 @@ public class WeatherService {
 		}		
 		
 		return Response.status(200).entity(output.toString()).build();
+	}
+	
+	@GET
+	@Path("/current")
+	public Response getCurrentWeatherInfo() {
+		WeatherRetrievalService weatherRetrievalService = resourceContext.getResource(WeatherRetrievalService.class);
+		
+		String json = weatherRetrievalService.getOpenWeatherApiCurrentWeather();
+		CurrentWeather currentWeather = JacksonUtil.jsonToObj(json, CurrentWeather.class);
+
+		Velocity.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
+		Velocity.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
+		Velocity.init();
+
+		VelocityContext context = new VelocityContext();		
+		context.put("weather", currentWeather);
+		StringWriter writer = new StringWriter();
+		
+		Velocity.mergeTemplate(VelocityUtil.SHOW_WEATHER_TEMPLATE, "UTF-8", context, writer);
+		
+		return Response.status(200).entity(writer.toString()).build();	
 	}
 }

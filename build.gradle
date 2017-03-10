@@ -26,6 +26,9 @@ dependencies {
     compile 'org.glassfish.jersey.containers:jersey-container-jetty-http:2.25.1'
     // JSON support
     compile 'org.glassfish.jersey.media:jersey-media-json-jackson:2.25.1'
+    
+    // Velocity Template Engine
+    compile 'org.apache.velocity:velocity:1.7'
 
     testCompile 'junit:junit:4.12'
 }
