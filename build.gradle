@@ -13,7 +13,7 @@ repositories {
 }
 
 war {
-	archiveName = "com.kevfung.JerseyWeather-" + version;
+	archiveName = "com.kevfung.JerseyWeather-" + version + ".war";
 }
 
 // In this section you declare the dependencies for your production and test code
