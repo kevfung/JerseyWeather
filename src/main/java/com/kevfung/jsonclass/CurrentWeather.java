@@ -1,5 +1,9 @@
 package com.kevfung.jsonclass;
 
+import java.util.Date;
+
+import org.apache.commons.lang.time.DateFormatUtils;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -8,6 +12,7 @@ public class CurrentWeather {
 	Weather[] weather;
 	Main main;	
 	String name;
+	long dt;
 
 	public Weather[] getWeather() {
 		return weather;
@@ -33,13 +38,23 @@ public class CurrentWeather {
 		this.name = name;
 	}
 
+	public long getDt() {
+		return dt;
+	}
+
+	public void setDt(long dt) {
+		this.dt = dt;
+	}
+
 	@Override
 	public String toString() {
 		StringBuffer weatherStrBuffer = new StringBuffer();
 		for(int weatherItem = 0; weatherItem < weather.length; weatherItem++) {
 			weatherStrBuffer.append(weatherItem + " " + weather[weatherItem].toString() + "\n");
-		}
+		}			
+		
 		return "Current Weather [name : " + name + "\n"
+				+ "date : " + DateFormatUtils.ISO_DATETIME_FORMAT.format(new Date(dt)) + "\n"
 				+ weatherStrBuffer
 				+ main + "\n"
 				+ "]";
