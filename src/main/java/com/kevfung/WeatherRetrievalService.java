@@ -1,7 +1,5 @@
 package com.kevfung;
 
-import java.io.IOException;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -9,19 +7,16 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
-
 import org.apache.log4j.Logger;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kevfung.jsonclass.CurrentWeather;
+import com.kevfung.utils.JacksonUtil;
 import com.kevfung.utils.OpenWeatherApiUtil;
-import com.kevfung.utils.jsonclasses.CurrentWeather;
 
 /**
- * Service used to communicate with Open Weather APi to retrieve 
+ * Service used to communicate with Open Weather API to retrieve 
  * weather information
  * 
  * @author Kevin
@@ -32,10 +27,17 @@ public class WeatherRetrievalService {
 
 	private static final Logger LOG = Logger.getLogger(WeatherRetrievalService.class);
 	
+	/**
+	 * Gets the current weather by calling the Open Weather Service API
+	 * and converst it to a {@link CurrentWeather} object. Then it 
+	 * prints out the object.
+	 * 
+	 * @return
+	 */
 	@GET
 	@Path("/current")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response getCurrentWeather(@Context UriInfo queryParams) {
+	public Response getCurrentWeather() {
 		Client client = ClientBuilder.newClient();
 		WebTarget target = client.target(OpenWeatherApiUtil.BASE_URL)
 				.path(OpenWeatherApiUtil.WEATHER_RESOURCE)
@@ -49,14 +51,7 @@ public class WeatherRetrievalService {
 		String jsonResponse = invocationBuilder.get(String.class);		
 		LOG.debug(jsonResponse);
 		
-		ObjectMapper objectMapper = new ObjectMapper();
-		CurrentWeather currentWeather = null;
-		try {
-			currentWeather = objectMapper.readValue(jsonResponse, CurrentWeather.class);
-			LOG.debug(currentWeather.toString());
-		} catch (IOException e) {
-			LOG.warn("Unable to parse JSON to " + CurrentWeather.class, e);
-		}		
+		CurrentWeather currentWeather = JacksonUtil.jsonToObj(jsonResponse, CurrentWeather.class);
 		
 		return Response.status(200)
 				.entity(currentWeather != null ? currentWeather.toString().replace("\n", "<br>") : "Error: Unable to parse JSON response")
