@@ -39,7 +39,6 @@ public class WeatherRetrievalService {
 	 */
 	@GET
 	@Path("/current")
-	@Consumes(MediaType.APPLICATION_JSON)
 	public Response getCurrentWeather() {
 		String jsonResponse = getOpenWeatherApiCurrentWeather();
 		
