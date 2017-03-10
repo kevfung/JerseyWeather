@@ -25,9 +25,6 @@ public class OpenWeatherApiUtil {
 	public static final String UNITS_QUERY_PARAM = "units";		
 	public static final String METRIC_UNITS = "metric";	// used by UNITS_QUERY_PARAM
 	
-	// Value constants
-	private static final String LOCALE_VANCOUVER = "Vancouver";
-	
 	private static String openWeatherApiKey; 
 	
 	public static String getOpenWeatherApiKey() {
