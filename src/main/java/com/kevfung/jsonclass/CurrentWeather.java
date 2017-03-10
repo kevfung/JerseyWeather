@@ -1,4 +1,4 @@
-package com.kevfung.utils.jsonclasses;
+package com.kevfung.jsonclass;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
