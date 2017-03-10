@@ -10,7 +10,7 @@ key in the gradle.properties file.
 <li>Run the Gretty task "appRun" to start a test Jetty server for the JerseyWeather service</li>
 </ol>
 
-# Current resources
+# Available Service Endpoints
 <ul>
 <li>   
 Get current weather from Open Weather API, get the JSON, convert it to a POJO and call the POJO's toString()<br>
@@ -21,3 +21,4 @@ http://localhost:8080/JerseyWeather/openweather/current
 Test method to see if the service is running. It prints out the resource being used and any query parameters that you pass it<br>   
 http://localhost:8080/JerseyWeather/weather/current?myParam1=value1&myParam2=value2
 </li>
+</ul>
