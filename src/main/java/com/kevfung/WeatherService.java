@@ -57,6 +57,12 @@ public class WeatherService {
 		return Response.status(200).entity(output.toString()).build();
 	}
 	
+	/**
+	 * Retrieves the current weather information and shows it using 
+	 * velocity template
+	 * 
+	 * @return outputs velocity template text with merged weather information
+	 */
 	@GET
 	@Path("/current")
 	public Response getCurrentWeatherInfo() {		
