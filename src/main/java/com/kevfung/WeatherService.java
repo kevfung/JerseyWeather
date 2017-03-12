@@ -36,9 +36,6 @@ public class WeatherService {
 	
 	private static final Logger LOG = Logger.getLogger(WeatherService.class);
 	
-	@Context
-	ResourceContext resourceContext;
-	
 	/**
 	 * This method is for testing our weather service.
 	 * 
@@ -63,10 +60,8 @@ public class WeatherService {
 	
 	@GET
 	@Path("/current")
-	public Response getCurrentWeatherInfo() {
-		WeatherRetrievalService weatherRetrievalService = resourceContext.getResource(WeatherRetrievalService.class);
-		
-		String json = weatherRetrievalService.getOpenWeatherApiCurrentWeather();
+	public Response getCurrentWeatherInfo() {		
+		String json = OpenWeatherApiUtil.getOpenWeatherApiCurrentWeather();
 		CurrentWeather currentWeather = JacksonUtil.jsonToObj(json, CurrentWeather.class);
 
 		Velocity.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");

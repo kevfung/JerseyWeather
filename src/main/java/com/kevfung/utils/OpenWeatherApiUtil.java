@@ -5,6 +5,13 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Invocation;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
 import org.apache.log4j.Logger;
 
 public class OpenWeatherApiUtil {
@@ -21,7 +28,10 @@ public class OpenWeatherApiUtil {
 
 	// Query parameters & values
 	public static final String API_KEY_QUERY_PARAM = "APPID"; // Usually not safe to put API key in query param, but Open Weather API only allows this method
+	
 	public static final String CITY_QUERY_PARAM = "q";
+	private static final String CITY_VANCOUVER = "Vancouver";
+	
 	public static final String UNITS_QUERY_PARAM = "units";		
 	public static final String METRIC_UNITS = "metric";	// used by UNITS_QUERY_PARAM
 	
@@ -73,5 +83,40 @@ public class OpenWeatherApiUtil {
 				}				
 			}
 		}		
+	}
+	
+	/**
+	 * Gets the current weather from Open Weather API and
+	 * retuns the JSON response as a string
+	 * 
+	 * @return JSON response for current weather
+	 */
+	public static String getOpenWeatherApiCurrentWeather() {
+		String jsonStr = null;
+		
+		Client client = ClientBuilder.newClient();		
+		WebTarget target = client.target(OpenWeatherApiUtil.BASE_URL)
+				.path(OpenWeatherApiUtil.WEATHER_RESOURCE)
+				.queryParam(OpenWeatherApiUtil.CITY_QUERY_PARAM, CITY_VANCOUVER)
+				.queryParam(OpenWeatherApiUtil.UNITS_QUERY_PARAM, OpenWeatherApiUtil.METRIC_UNITS)
+				.queryParam(OpenWeatherApiUtil.API_KEY_QUERY_PARAM, OpenWeatherApiUtil.getOpenWeatherApiKey());
+
+		LOG.debug("Target URL: " + target.getUri().toString());
+		
+		Invocation.Builder invocationBuilder = target.request(MediaType.APPLICATION_JSON);		
+		
+		Response response = invocationBuilder.get(Response.class);		
+		jsonStr = response.readEntity(String.class);
+		
+		// Check response from Open Weather API and log the response appropriately
+		if (response.getStatus() == 200) {
+			LOG.debug(jsonStr);
+		}
+		else {
+			LOG.error(ErrorMessageUtils.ERROR_OPEN_WEATHER_API_RESPONSE_NON_200_STATUS
+					+ "\n" + response.readEntity(String.class));
+		}
+			
+		return jsonStr;
 	}
 }
