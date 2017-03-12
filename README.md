@@ -18,7 +18,12 @@ http://localhost:8080/JerseyWeather/openweather/current
 </li> 
 <br>
 <li>
+Shows the current weather information as retrieved from Open Weather API and displays it nicely using Velocity Template<br>
+http://localhost:8080/JerseyWeather/weather/current
+</li>
+<br>
+<li>
 Test method to see if the service is running. It prints out the resource being used and any query parameters that you pass it<br>   
-http://localhost:8080/JerseyWeather/weather/current?myParam1=value1&myParam2=value2
+http://localhost:8080/JerseyWeather/weather/anything?myParam1=value1&myParam2=value2
 </li>
 </ul>
