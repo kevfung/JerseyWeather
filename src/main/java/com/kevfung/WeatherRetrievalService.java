@@ -1,13 +1,7 @@
 package com.kevfung;
 
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Invocation;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.apache.log4j.Logger;
 
@@ -44,6 +38,7 @@ public class WeatherRetrievalService {
 		
 		// If we didn't' get the current weather from the JSON, then return error message to user
 		if (currentWeather == null) {
+			LOG.warn("Could not create CurrentWeather object after call to Open Weather API");
 			return Response.status(500)
 					.entity(ErrorMessageUtils.ERROR_OPEN_WEATHER_API_GET_CURRENT_WEATHER)
 					.build();
