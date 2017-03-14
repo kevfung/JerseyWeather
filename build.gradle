@@ -3,17 +3,15 @@ apply plugin: 'war'
 // Apply the Gretty plugin to run in an embedded servlet container
 apply from: 'https://raw.github.com/akhikhl/gretty/master/pluginScripts/gretty.plugin'
 
-group = 'com.kevfung'
-version = '0.1-SNAPSHOT'
-description = 'Weather service web application'
-
 // In this section you declare where to find the dependencies of your project
 repositories {
     mavenCentral()
 }
 
 war {
-	archiveName = "com.kevfung.JerseyWeather-" + version + ".war";
+	baseName = 'com.kevfung.JersweyWeather'
+	version = '0.1-SNAPSHOT'
+	description = 'Weather service web application'
 }
 
 // In this section you declare the dependencies for your production and test code
