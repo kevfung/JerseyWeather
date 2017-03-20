@@ -2,12 +2,15 @@ package com.kevfung;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.core.Configuration;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import org.apache.log4j.Logger;
 
 import com.kevfung.jsonclass.CurrentWeather;
 import com.kevfung.utils.JacksonUtil;
-import com.kevfung.utils.OpenWeatherApiUtil;
+import com.kevfung.utils.weather.OpenWeatherApiUtil;
+import com.kevfung.utils.weather.WeatherApiUtil;
 import com.kevfung.utils.ErrorMessageUtils;
 
 /**
@@ -22,6 +25,9 @@ public class WeatherRetrievalService {
 
 	private static final Logger LOG = Logger.getLogger(WeatherRetrievalService.class);
 	
+	@Context
+	private Configuration config;
+	
 	/**
 	 * Gets the current weather by calling the Open Weather Service API
 	 * and converts it to a {@link CurrentWeather} object. Then it 
@@ -32,7 +38,8 @@ public class WeatherRetrievalService {
 	@GET
 	@Path("/current")
 	public Response getCurrentWeather() {
-		String jsonResponse = OpenWeatherApiUtil.getOpenWeatherApiCurrentWeather();
+		WeatherApiUtil weatherApiUtil = (WeatherApiUtil) config.getProperty(WeatherServiceApplication.WEATHER_UTIL_PROPERTY);		
+		String jsonResponse = weatherApiUtil.getCurrentWeather();
 		
 		CurrentWeather currentWeather = JacksonUtil.jsonToObj(jsonResponse, CurrentWeather.class);
 		

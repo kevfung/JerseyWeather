@@ -1,4 +1,4 @@
-package com.kevfung.utils;
+package com.kevfung.utils.weather;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -14,7 +14,16 @@ import javax.ws.rs.core.Response;
 
 import org.apache.log4j.Logger;
 
-public class OpenWeatherApiUtil {
+import com.kevfung.utils.ErrorMessageUtils;
+
+/**
+ * Open Weather API implementation of weather API to allow
+ * clients to access weather conditions
+ * 
+ * @author Kevin
+ *
+ */
+public class OpenWeatherApiUtil implements WeatherApiUtil {
 
 	private static final Logger LOG = Logger.getLogger(OpenWeatherApiUtil.class);
 	
@@ -35,18 +44,16 @@ public class OpenWeatherApiUtil {
 	public static final String UNITS_QUERY_PARAM = "units";		
 	public static final String METRIC_UNITS = "metric";	// used by UNITS_QUERY_PARAM
 	
-	private static String openWeatherApiKey; 
+	private static String openWeatherApiKey;
 	
-	public static String getOpenWeatherApiKey() {
-		if (openWeatherApiKey == null || openWeatherApiKey.length() == 0) {
-			try {
-				loadOpenWeatherApiKey(PROPERTIES_FILE);
-			}
-			catch (IllegalStateException e) {
-				LOG.error(e.getMessage(), e);
-			}
-		}
-		
+	public OpenWeatherApiUtil() {
+		loadOpenWeatherApiKey(PROPERTIES_FILE);
+	}
+	
+	/**
+	 * Get API key loaded from PROPERTIES_FILE for Open Weather API
+	 */
+	public String getApiKey() {
 		return openWeatherApiKey;
 	}
 	
@@ -57,7 +64,7 @@ public class OpenWeatherApiUtil {
 	 * @param fileName the filename and path of where the API key is stored
 	 * @throws IllegalStateException
 	 */
-	public static void loadOpenWeatherApiKey(String fileName) throws IllegalStateException {
+	void loadOpenWeatherApiKey(String fileName) throws IllegalStateException {
 		FileInputStream propertiesFile = null;
 		
 		try {
@@ -91,7 +98,7 @@ public class OpenWeatherApiUtil {
 	 * 
 	 * @return JSON response for current weather
 	 */
-	public static String getOpenWeatherApiCurrentWeather() {
+	public String getCurrentWeather() {
 		String jsonStr = null;
 		
 		Client client = ClientBuilder.newClient();		
@@ -99,7 +106,7 @@ public class OpenWeatherApiUtil {
 				.path(OpenWeatherApiUtil.WEATHER_RESOURCE)
 				.queryParam(OpenWeatherApiUtil.CITY_QUERY_PARAM, CITY_VANCOUVER)
 				.queryParam(OpenWeatherApiUtil.UNITS_QUERY_PARAM, OpenWeatherApiUtil.METRIC_UNITS)
-				.queryParam(OpenWeatherApiUtil.API_KEY_QUERY_PARAM, OpenWeatherApiUtil.getOpenWeatherApiKey());
+				.queryParam(OpenWeatherApiUtil.API_KEY_QUERY_PARAM, getApiKey());
 
 		LOG.debug("Target URL: " + target.getUri().toString());
 		

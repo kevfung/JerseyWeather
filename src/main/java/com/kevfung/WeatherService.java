@@ -8,6 +8,7 @@ import java.util.Set;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.core.Configuration;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -21,8 +22,9 @@ import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 
 import com.kevfung.jsonclass.CurrentWeather;
 import com.kevfung.utils.JacksonUtil;
-import com.kevfung.utils.OpenWeatherApiUtil;
 import com.kevfung.utils.VelocityUtil;
+import com.kevfung.utils.weather.OpenWeatherApiUtil;
+import com.kevfung.utils.weather.WeatherApiUtil;
 
 /**
  * This is the weather service resource
@@ -32,8 +34,11 @@ import com.kevfung.utils.VelocityUtil;
  */
 @Path("/weather")
 public class WeatherService {
-	
+		
 	private static final Logger LOG = Logger.getLogger(WeatherService.class);
+	
+	@Context
+	private Configuration config;
 	
 	/**
 	 * This method is for testing our weather service.
@@ -65,8 +70,10 @@ public class WeatherService {
 	 */
 	@GET
 	@Path("/current")
-	public Response getCurrentWeatherInfo() {		
-		String json = OpenWeatherApiUtil.getOpenWeatherApiCurrentWeather();
+	public Response getCurrentWeatherInfo() {
+		WeatherApiUtil weatherApiUtil = (WeatherApiUtil) config.getProperty(WeatherServiceApplication.WEATHER_UTIL_PROPERTY);
+		
+		String json = weatherApiUtil.getCurrentWeather();
 		CurrentWeather currentWeather = JacksonUtil.jsonToObj(json, CurrentWeather.class);
 
 		Velocity.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");

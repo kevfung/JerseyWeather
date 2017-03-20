@@ -7,7 +7,7 @@
 
 	<servlet-mapping>
 		<servlet-name>com.kevfung.WeatherServiceApplication</servlet-name>
-		<url-pattern>/*</url-pattern>
+		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
 </web-app>
