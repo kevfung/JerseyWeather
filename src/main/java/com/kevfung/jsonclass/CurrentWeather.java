@@ -1,5 +1,7 @@
 package com.kevfung.jsonclass;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import org.apache.commons.lang.time.DateFormatUtils;
@@ -44,6 +46,11 @@ public class CurrentWeather {
 
 	public void setDt(long dt) {
 		this.dt = dt;
+	}
+	
+	public String getFormattedDt() {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM dd, yyyy");
+		return dateFormat.format(new Date(dt));
 	}
 
 	@Override

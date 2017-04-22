@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <head>
-	<link href="/public/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
 </head>
 <body>
 	<div class="lead bg-success">
-	Weather for Vancouver
+	Weather for $weather.name
 	</div>
-	<table class="table-striped">
+	<table class="table table-striped">
 		<thead>
 			<tr>
 				<td>Day</td>
@@ -16,8 +16,9 @@
 		</thead>
 		<tbody>
 			<tr>
-				<td>Today</td>
-				<td>$!weather.main.temp</td>
+				<td>$!weather.getFormattedDt()</td>
+				<td>$!weather.getMain().getTemp()</td>
+				<td>$!weather.weather.get(0).getDescription()</td>
 			</tr>
 		</tbody>
 	</table>	
