@@ -5,7 +5,7 @@ import java.io.IOException;
 import org.apache.log4j.Logger;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kevfung.jsonclass.CurrentWeather;
+import com.kevfung.jsonclass.openweatherapi.CurrentWeather;
 
 /**
  * Set of utilities that make it easier to use Jackson for

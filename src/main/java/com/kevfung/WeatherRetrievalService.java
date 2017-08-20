@@ -7,10 +7,10 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import org.apache.log4j.Logger;
 
-import com.kevfung.jsonclass.CurrentWeather;
 import com.kevfung.utils.JacksonUtil;
 import com.kevfung.utils.weather.OpenWeatherApiUtil;
 import com.kevfung.utils.weather.WeatherApiUtil;
+import com.kevfung.jsonclass.openweatherapi.CurrentWeather;
 import com.kevfung.utils.ErrorMessageUtils;
 
 /**

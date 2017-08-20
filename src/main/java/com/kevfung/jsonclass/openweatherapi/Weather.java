@@ -1,4 +1,4 @@
-package com.kevfung.jsonclass;
+package com.kevfung.jsonclass.openweatherapi;
 
 public class Weather {
 	

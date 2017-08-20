@@ -20,7 +20,7 @@ import org.apache.velocity.app.Velocity;
 import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 
-import com.kevfung.jsonclass.CurrentWeather;
+import com.kevfung.jsonclass.openweatherapi.CurrentWeather;
 import com.kevfung.utils.JacksonUtil;
 import com.kevfung.utils.VelocityUtil;
 import com.kevfung.utils.weather.OpenWeatherApiUtil;
